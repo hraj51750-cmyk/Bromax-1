@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitTrack - Your Fitness Journey</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Onboarding Screen -->
+    <div id="onboarding-screen" class="screen active">
+        <div class="onboarding-container">
+            <div class="onboarding-header">
+                <i class="fas fa-heartbeat"></i>
+                <h1>FitTrack</h1>
+                <p>Your personal fitness companion</p>
+            </div>
+            <form id="profile-form" class="profile-form">
+                <div class="form-group">
+                    <label for="user-name"><i class="fas fa-user"></i> Name</label>
+                    <input type="text" id="user-name" placeholder="Enter your name" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="user-age"><i class="fas fa-calendar"></i> Age</label>
+                        <input type="number" id="user-age" placeholder="Age" min="10" max="100" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="user-weight"><i class="fas fa-weight"></i> Weight (kg)</label>
+                        <input type="number" id="user-weight" placeholder="Weight" min="30" max="300" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="user-height"><i class="fas fa-ruler-vertical"></i> Height (cm)</label>
+                    <input type="number" id="user-height" placeholder="Height" min="100" max="250" required>
+                </div>
+                <div class="form-group">
+                    <label for="fitness-goal"><i class="fas fa-bullseye"></i> Fitness Goal</label>
+                    <select id="fitness-goal" required>
+                        <option value="">Select your goal</option>
+                        <option value="weight-loss">Weight Loss</option>
+                        <option value="muscle-gain">Muscle Gain</option>
+                        <option value="maintenance">Maintenance</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-primary">
+                    <i class="fas fa-arrow-right"></i> Get Started
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main App Screen -->
+    <div id="app-screen" class="screen">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-left">
+                <h1>FitTrack</h1>
+                <span id="greeting" class="greeting"></span>
+            </div>
+            <div class="header-right">
+                <div class="streak-badge">
+                    <i class="fas fa-fire"></i>
+                    <span id="streak-count">0</span>
+                </div>
+                <div class="points-badge">
+                    <i class="fas fa-star"></i>
+                    <span id="points-count">0</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="app-main">
+            <!-- Home Tab -->
+            <section id="home-tab" class="tab-content active">
+                <div class="dashboard">
+                    <!-- Quick Stats -->
+                    <div class="quick-stats">
+                        <div class="stat-card">
+                            <i class="fas fa-fire-alt"></i>
+                            <div class="stat-info">
+                                <span class="stat-value" id="today-calories">0</span>
+                                <span class="stat-label">Calories Burned</span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-clock"></i>
+                            <div class="stat-info">
+                                <span class="stat-value" id="today-time">0</span>
+                                <span class="stat-label">Minutes Active</span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-check-circle"></i>
+                            <div class="stat-info">
+                                <span class="stat-value" id="today-workouts">0</span>
+                                <span class="stat-label">Workouts Done</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Water Intake -->
+                    <div class="water-tracker">
+                        <h3><i class="fas fa-tint"></i> Water Intake</h3>
+                        <div class="water-progress">
+                            <div class="water-glasses">
+                                <div class="glass" data-glass="1"><i class="fas fa-glass-water"></i></div>
+                                <div class="glass" data-glass="2"><i class="fas fa-glass-water"></i></div>
+                                <div class="glass" data-glass="3"><i class="fas fa-glass-water"></i></div>
+                                <div class="glass" data-glass="4"><i class="fas fa-glass-water"></i></div>
+                                <div class="glass" data-glass="5"><i class="fas fa-glass-water"></i></div>
+                                <div class="glass" data-glass="6"><i class="fas fa-glass-water"></i></div>
+                                <div class="glass" data-glass="7"><i class="fas fa-glass-water"></i></div>
+                                <div class="glass" data-glass="8"><i class="fas fa-glass-water"></i></div>
+                            </div>
+                            <span class="water-count"><span id="water-count">0</span>/8 glasses</span>
+                        </div>
+                    </div>
+
+                    <!-- Today's Workout -->
+                    <div class="today-workout">
+                        <h3><i class="fas fa-calendar-day"></i> Today's Workout</h3>
+                        <div id="today-workout-card" class="workout-preview">
+                            <p class="no-workout">No workout scheduled for today. Start one from the Workouts tab!</p>
+                        </div>
+                    </div>
+
+                    <!-- Motivational Quote -->
+                    <div class="motivation-card">
+                        <i class="fas fa-quote-left"></i>
+                        <p id="motivation-quote">The only bad workout is the one that didn't happen.</p>
+                        <button class="btn-secondary" id="new-quote-btn">
+                            <i class="fas fa-sync-alt"></i> New Quote
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Workouts Tab -->
+            <section id="workouts-tab" class="tab-content">
+                <div class="workouts-container">
+                    <div class="workout-filters">
+                        <button class="filter-btn active" data-filter="all">All</button>
+                        <button class="filter-btn" data-filter="home">Home</button>
+                        <button class="filter-btn" data-filter="gym">Gym</button>
+                        <button class="filter-btn" data-filter="beginner">Beginner</button>
+                        <button class="filter-btn" data-filter="intermediate">Intermediate</button>
+                    </div>
+                    <div id="workouts-list" class="workouts-list">
+                        <!-- Workouts will be populated by JavaScript -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Progress Tab -->
+            <section id="progress-tab" class="tab-content">
+                <div class="progress-container">
+                    <!-- Weight Progress -->
+                    <div class="progress-card">
+                        <h3><i class="fas fa-chart-line"></i> Weight Progress</h3>
+                        <div class="weight-chart">
+                            <canvas id="weight-chart"></canvas>
+                        </div>
+                        <div class="weight-input">
+                            <input type="number" id="new-weight" placeholder="Enter current weight (kg)" min="30" max="300">
+                            <button class="btn-primary" id="log-weight-btn">
+                                <i class="fas fa-plus"></i> Log Weight
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Workout Consistency -->
+                    <div class="progress-card">
+                        <h3><i class="fas fa-calendar-check"></i> Workout Consistency</h3>
+                        <div class="consistency-chart">
+                            <canvas id="consistency-chart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Achievements -->
+                    <div class="progress-card">
+                        <h3><i class="fas fa-trophy"></i> Achievements</h3>
+                        <div id="achievements-grid" class="achievements-grid">
+                            <!-- Achievements will be populated by JavaScript -->
+                        </div>
+                    </div>
+
+                    <!-- Stats Summary -->
+                    <div class="progress-card">
+                        <h3><i class="fas fa-chart-bar"></i> Stats Summary</h3>
+                        <div class="stats-summary">
+                            <div class="summary-item">
+                                <span class="summary-label">Total Workouts</span>
+                                <span class="summary-value" id="total-workouts">0</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="summary-label">Total Minutes</span>
+                                <span class="summary-value" id="total-minutes">0</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="summary-label">Calories Burned</span>
+                                <span class="summary-value" id="total-calories">0</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="summary-label">Current Streak</span>
+                                <span class="summary-value" id="current-streak">0 days</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Profile Tab -->
+            <section id="profile-tab" class="tab-content">
+                <div class="profile-container">
+                    <div class="profile-header">
+                        <div class="profile-avatar">
+                            <i class="fas fa-user-circle"></i>
+                        </div>
+                        <h2 id="profile-name">User</h2>
+                        <span id="profile-goal" class="profile-goal">Fitness Goal</span>
+                    </div>
+
+                    <div class="profile-stats">
+                        <div class="profile-stat">
+                            <span class="stat-label">Age</span>
+                            <span class="stat-value" id="profile-age">-</span>
+                        </div>
+                        <div class="profile-stat">
+                            <span class="stat-label">Weight</span>
+                            <span class="stat-value" id="profile-weight">-</span>
+                        </div>
+                        <div class="profile-stat">
+                            <span class="stat-label">Height</span>
+                            <span class="stat-value" id="profile-height">-</span>
+                        </div>
+                    </div>
+
+                    <div class="profile-section">
+                        <h3><i class="fas fa-edit"></i> Edit Profile</h3>
+                        <form id="edit-profile-form" class="edit-form">
+                            <div class="form-group">
+                                <label for="edit-name">Name</label>
+                                <input type="text" id="edit-name" required>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="edit-age">Age</label>
+                                    <input type="number" id="edit-age" min="10" max="100" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="edit-weight">Weight (kg)</label>
+                                    <input type="number" id="edit-weight" min="30" max="300" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="edit-height">Height (cm)</label>
+                                <input type="number" id="edit-height" min="100" max="250" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="edit-goal">Fitness Goal</label>
+                                <select id="edit-goal" required>
+                                    <option value="weight-loss">Weight Loss</option>
+                                    <option value="muscle-gain">Muscle Gain</option>
+                                    <option value="maintenance">Maintenance</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn-primary">
+                                <i class="fas fa-save"></i> Save Changes
+                            </button>
+                        </form>
+                    </div>
+
+                    <div class="profile-section">
+                        <h3><i class="fas fa-bell"></i> Reminders</h3>
+                        <div class="reminder-settings">
+                            <div class="reminder-toggle">
+                                <span>Daily Workout Reminder</span>
+                                <label class="switch">
+                                    <input type="checkbox" id="reminder-toggle" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            <div class="reminder-time">
+                                <label for="reminder-time">Reminder Time</label>
+                                <input type="time" id="reminder-time" value="09:00">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="profile-section">
+                        <h3><i class="fas fa-cog"></i> Settings</h3>
+                        <div class="settings-options">
+                            <button class="settings-btn" id="export-data-btn">
+                                <i class="fas fa-download"></i> Export Data
+                            </button>
+                            <button class="settings-btn danger" id="reset-data-btn">
+                                <i class="fas fa-trash"></i> Reset All Data
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <button class="nav-btn active" data-tab="home">
+                <i class="fas fa-home"></i>
+                <span>Home</span>
+            </button>
+            <button class="nav-btn" data-tab="workouts">
+                <i class="fas fa-dumbbell"></i>
+                <span>Workouts</span>
+            </button>
+            <button class="nav-btn" data-tab="progress">
+                <i class="fas fa-chart-line"></i>
+                <span>Progress</span>
+            </button>
+            <button class="nav-btn" data-tab="profile">
+                <i class="fas fa-user"></i>
+                <span>Profile</span>
+            </button>
+        </nav>
+    </div>
+
+    <!-- Workout Modal -->
+    <div id="workout-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal-workout-name">Workout</h2>
+                <button class="modal-close" id="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="modal-workout-details" class="workout-details">
+                    <!-- Workout details will be populated by JavaScript -->
+                </div>
+                <div class="workout-timer">
+                    <div class="timer-display">
+                        <span id="timer-minutes">00</span>:<span id="timer-seconds">00</span>
+                    </div>
+                    <div class="timer-controls">
+                        <button class="btn-secondary" id="start-timer">
+                            <i class="fas fa-play"></i> Start
+                        </button>
+                        <button class="btn-secondary" id="pause-timer" disabled>
+                            <i class="fas fa-pause"></i> Pause
+                        </button>
+                        <button class="btn-secondary" id="reset-timer">
+                            <i class="fas fa-redo"></i> Reset
+                        </button>
+                    </div>
+                </div>
+                <button class="btn-primary btn-large" id="complete-workout">
+                    <i class="fas fa-check"></i> Complete Workout
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="notification-toast" class="toast">
+        <div class="toast-content">
+            <i class="fas fa-check-circle"></i>
+            <span id="toast-message">Notification message</span>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
