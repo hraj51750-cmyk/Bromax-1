@@ -241,22 +241,37 @@ function setupEventListeners() {
         profileForm.addEventListener('submit', handleOnboardingSubmit);
     }
 
-    // Tab navigation
+    // Tab navigation - support both click and touch events for mobile
     const navBtns = document.querySelectorAll('.nav-btn');
     navBtns.forEach(btn => {
-        btn.addEventListener('click', () => switchTab(btn.dataset.tab));
+        const handleNav = (e) => {
+            e.preventDefault();
+            switchTab(btn.dataset.tab);
+        };
+        btn.addEventListener('click', handleNav);
+        btn.addEventListener('touchend', handleNav);
     });
 
-    // Water glasses
+    // Water glasses - support both click and touch events for mobile
     const glasses = document.querySelectorAll('.glass');
     glasses.forEach(glass => {
-        glass.addEventListener('click', () => toggleWaterGlass(parseInt(glass.dataset.glass)));
+        const handleGlass = (e) => {
+            e.preventDefault();
+            toggleWaterGlass(parseInt(glass.dataset.glass));
+        };
+        glass.addEventListener('click', handleGlass);
+        glass.addEventListener('touchend', handleGlass);
     });
 
-    // Workout filters
+    // Workout filters - support both click and touch events for mobile
     const filterBtns = document.querySelectorAll('.filter-btn');
     filterBtns.forEach(btn => {
-        btn.addEventListener('click', () => filterWorkouts(btn.dataset.filter));
+        const handleFilter = (e) => {
+            e.preventDefault();
+            filterWorkouts(btn.dataset.filter);
+        };
+        btn.addEventListener('click', handleFilter);
+        btn.addEventListener('touchend', handleFilter);
     });
 
     // Timer controls
