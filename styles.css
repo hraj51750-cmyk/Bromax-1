@@ -166,6 +166,10 @@ body {
     gap: 10px;
     box-shadow: 0 4px 14px 0 rgba(99, 102, 241, 0.3);
     letter-spacing: 0.3px;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    min-height: 48px;
 }
 
 .btn-primary:hover {
@@ -191,6 +195,10 @@ body {
     align-items: center;
     justify-content: center;
     gap: 8px;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    min-height: 44px;
 }
 
 .btn-secondary:hover {
@@ -414,6 +422,11 @@ body {
     color: var(--text-light);
     font-size: 22px;
     border: 2px solid transparent;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    min-width: 44px;
+    min-height: 44px;
 }
 
 .glass.filled {
@@ -553,6 +566,10 @@ body {
     cursor: pointer;
     transition: var(--transition);
     white-space: nowrap;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    min-height: 44px;
 }
 
 .filter-btn.active {
@@ -577,17 +594,39 @@ body {
 .workout-card {
     background: var(--card-background);
     border-radius: var(--radius-md);
-    padding: 24px;
     box-shadow: var(--shadow-sm);
     cursor: pointer;
     transition: var(--transition);
     border: 1px solid var(--border-color);
+    overflow: hidden;
 }
 
 .workout-card:hover {
     transform: translateY(-4px);
     box-shadow: var(--shadow-lg);
     border-color: var(--primary-light);
+}
+
+.workout-card-image {
+    width: 100%;
+    height: 180px;
+    overflow: hidden;
+    position: relative;
+}
+
+.workout-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.workout-card:hover .workout-card-image img {
+    transform: scale(1.05);
+}
+
+.workout-card-content {
+    padding: 20px;
 }
 
 .workout-card-header {
@@ -1138,6 +1177,12 @@ input:checked + .slider:before {
     transition: var(--transition);
     color: var(--text-secondary);
     border-radius: var(--radius-sm);
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    min-width: 60px;
+    min-height: 44px;
+    justify-content: center;
 }
 
 .nav-btn i {
@@ -1529,4 +1574,31 @@ input:checked + .slider:before {
     font-weight: 700;
     color: var(--text-primary);
     letter-spacing: -0.3px;
+}
+
+/* Mobile-specific touch improvements */
+@media (max-width: 768px) {
+    /* Ensure all interactive elements have proper touch targets */
+    button, a, input, select, textarea {
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
+    }
+    
+    /* Improve nav button touch targets */
+    .nav-btn {
+        flex: 1;
+        padding: 12px 8px;
+    }
+    
+    /* Improve filter button scrolling */
+    .workout-filters {
+        -webkit-overflow-scrolling: touch;
+        scroll-behavior: smooth;
+    }
+    
+    /* Prevent text selection on buttons */
+    .nav-btn, .filter-btn, .glass, .btn-primary, .btn-secondary {
+        user-select: none;
+        -webkit-user-select: none;
+    }
 }
