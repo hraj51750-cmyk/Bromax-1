@@ -165,7 +165,88 @@ let timerState = {
 document.addEventListener('DOMContentLoaded', () => {
     loadAppState();
     initializeApp();
+    setupMobileEventDelegation();
 });
+
+// Event delegation for mobile - more reliable than individual listeners
+function setupMobileEventDelegation() {
+    // Use document-level event delegation for all interactive elements
+    document.addEventListener('click', (e) => {
+        // Handle nav buttons
+        const navBtn = e.target.closest('.nav-btn');
+        if (navBtn) {
+            e.preventDefault();
+            switchTab(navBtn.dataset.tab);
+            return;
+        }
+        
+        // Handle workout cards - open modal
+        const workoutCard = e.target.closest('.workout-card');
+        if (workoutCard) {
+            const workoutId = parseInt(workoutCard.dataset.workoutId);
+            if (workoutId) {
+                openWorkoutModal(workoutId);
+            }
+            return;
+        }
+        
+        // Handle filter buttons
+        const filterBtn = e.target.closest('.filter-btn');
+        if (filterBtn) {
+            e.preventDefault();
+            filterWorkouts(filterBtn.dataset.filter);
+            return;
+        }
+        
+        // Handle water glasses
+        const glass = e.target.closest('.glass');
+        if (glass) {
+            e.preventDefault();
+            toggleWaterGlass(parseInt(glass.dataset.glass));
+            return;
+        }
+    });
+    
+    // Touch events specifically for mobile - use touchend as fallback
+    document.addEventListener('touchend', (e) => {
+        // Handle nav buttons
+        const navBtn = e.target.closest('.nav-btn');
+        if (navBtn) {
+            e.preventDefault();
+            e.stopPropagation();
+            switchTab(navBtn.dataset.tab);
+            return;
+        }
+        
+        // Handle workout cards
+        const workoutCard = e.target.closest('.workout-card');
+        if (workoutCard) {
+            const workoutId = parseInt(workoutCard.dataset.workoutId);
+            if (workoutId) {
+                e.preventDefault();
+                openWorkoutModal(workoutId);
+            }
+            return;
+        }
+        
+        // Handle filter buttons
+        const filterBtn = e.target.closest('.filter-btn');
+        if (filterBtn) {
+            e.preventDefault();
+            e.stopPropagation();
+            filterWorkouts(filterBtn.dataset.filter);
+            return;
+        }
+        
+        // Handle water glasses
+        const glass = e.target.closest('.glass');
+        if (glass) {
+            e.preventDefault();
+            e.stopPropagation();
+            toggleWaterGlass(parseInt(glass.dataset.glass));
+        }
+    });
+}
 
 function initializeApp() {
     // Check if user profile exists
